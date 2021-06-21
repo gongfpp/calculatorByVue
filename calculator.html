@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+  <h2>NBU 196003408 刘玉坤 计算器</h2>
+  <div class="center">
+    <form action="##" id="cal_form">
+      <input type="text" id="display" v-model='text'>
+      <span id="buttons" v-for="(ele, index) in vforList" :key="index">  
+        <input type="button" class = 'btn number' v-if="!(index%4===3)" :value='ele' @click='get(ele)'>
+        <input type="button" class="btn operator" v-if="index%4===3" :value='ele' @click='get(ele)' >
+        <br v-if="index%4===3">
+      </span>
+      <input type="button" id="clear" class="btn other" value="C" @click='clear'>
+      <input type="button" class="btn other" value="sqrt" @click="sqrt">
+      <input type="button" class="btn other" value="=" @click="calculates">
+      </form>
+  </div>
+
+  <script>
+    
+    var cal = new Vue({
+      el: '#cal_form',
+      data: {
+        text: '',
+        Pi: 3.14159,
+        E: 2.71828,
+        vforList:[7,8,9,'+',4,5,6,'*',1,2,3,'-',0,'Pi','E','.','/'],
+      },
+      methods: {
+        clear: function () {
+          console.log("clear function called ")
+          this.text = ''
+        },
+        get: function (value) {
+          console.log('this value =' + value)
+          if (value==='Pi') {
+            this.text += this.Pi;
+          }else if(value === 'E'){
+            this.text += this.E;
+          }else {this.text += value}
+        },
+        calculates: function () {
+          console.log('before:' + this.text)
+          this.text = eval(this.text).toFixed(2)
+          console.log("after:" + this.text)
+        },
+        sqrt: function () {
+          console.log('before:' + this.text)
+          this.text = Math.sqrt(eval(this.text))
+          console.log("after:" + this.text)
+        },
+      }
+    })
+  </script>
+</body>
+</html>
